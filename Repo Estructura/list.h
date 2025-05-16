@@ -338,8 +338,37 @@ void InsertarOrdenadoMenor(Node **lista, Node *nodo){
 
 //---EXTRAS
 
-//Eliminar numeros con cifras impares
+// Ordena los elementos de indices impares de primero y luego los indices pares en orden
+void reorganize (Node*p){ 
+    Node *q=NULL; //Esta lista guarda los valores de los indices pares de la lista p
+    Node *aux=p;
+    Node *aux2;
+    while (aux && aux->next){
+        if (!q){ // Cuando la nueva lista auxiliar este vacia 
+            q=aux->next;
+            aux->next=q->next; //Ingresa el primer elemento de indice par de la lista p en la lista q
+            q->next=NULL;
+            aux2=q;
+            aux=aux->next;
+        }else{
+            aux2->next=aux->next;
+            aux2=aux2->next;
+            aux->next=aux2->next;
+            aux2->next=NULL;
+            aux=aux->next;
 
+        }
+    }
+    if (!aux){
+        aux=p;
+        while (aux->next){
+            aux=aux->next;
+        }
+    }
+    aux->next=q;
+};
+
+//Eliminar numeros con cifras impares
 bool toDelete (int value){
     while (value>0){
         int res = value%10;
